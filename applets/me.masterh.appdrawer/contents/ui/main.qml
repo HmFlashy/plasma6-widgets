@@ -16,13 +16,15 @@ PlasmoidItem {
 
     property bool popupPinned: false
     property int dragSourceIndex: -1
+    property var folderApps: []
 
     readonly property string groupTitle: Plasmoid.configuration.title || "Applications"
+    readonly property string linkedFolder: (Plasmoid.configuration.linkedFolder || "").trim()
     readonly property int gridColumns: Math.max(2, Math.min(6, Plasmoid.configuration.columns || 3))
     readonly property int previewGridSize: Math.max(2, Math.min(3, Plasmoid.configuration.previewGrid || 2))
     readonly property int tileIconSize: Math.max(24, Math.min(96, Plasmoid.configuration.popupIconSize || 48))
     readonly property bool inEditMode: Plasmoid.containment && Plasmoid.containment.corona ? Plasmoid.containment.corona.editMode : false
-    readonly property var apps: {
+    readonly property var manualApps: {
         try {
             const parsed = JSON.parse(Plasmoid.configuration.appsJson || "[]")
             return Array.isArray(parsed) ? parsed : []
@@ -30,11 +32,88 @@ PlasmoidItem {
             return []
         }
     }
+    readonly property var apps: {
+        if (!linkedFolder || folderApps.length === 0) return manualApps
+        const out = folderApps.slice()
+        const seen = {}
+        for (let i = 0; i < out.length; i++) seen[out[i].target] = true
+        for (let i = 0; i < manualApps.length; i++) {
+            if (!seen[manualApps[i].target]) out.push(manualApps[i])
+        }
+        return out
+    }
+
+    onLinkedFolderChanged: scanLinkedFolder()
+    onExpandedChanged: if (expanded && linkedFolder) scanLinkedFolder()
+    Component.onCompleted: if (linkedFolder) scanLinkedFolder()
 
     toolTipMainText: groupTitle
     toolTipSubText: apps.length === 0
         ? "Empty — right-click → Configure to add apps"
-        : apps.length + (apps.length > 1 ? " éléments" : " élément")
+        : apps.length + (apps.length > 1 ? " items" : " item")
+
+    P5Support.DataSource {
+        id: folderScanner
+        engine: "executable"
+        connectedSources: []
+        onNewData: (sourceName, data) => {
+            const stdout = (data["stdout"] || "").trim()
+            disconnectSource(sourceName)
+            if (!stdout) return
+            try {
+                const parsed = JSON.parse(stdout)
+                if (Array.isArray(parsed)) root.folderApps = parsed
+            } catch (e) {}
+        }
+    }
+
+    Timer {
+        id: folderPollTimer
+        interval: 5000
+        repeat: true
+        running: root.linkedFolder !== ""
+        onTriggered: root.scanLinkedFolder()
+    }
+
+    function scanLinkedFolder() {
+        const dir = root.linkedFolder
+        if (!dir) {
+            root.folderApps = []
+            return
+        }
+        const py =
+            "import json, os, sys\n" +
+            "d = os.path.expanduser(sys.argv[1])\n" +
+            "if not os.path.isdir(d):\n" +
+            "    print('[]')\n" +
+            "    sys.exit(0)\n" +
+            "out = []\n" +
+            "for entry in sorted(os.listdir(d), key=lambda s: s.lower()):\n" +
+            "    if entry.startswith('.'): continue\n" +
+            "    p = os.path.join(d, entry)\n" +
+            "    if p.endswith('.desktop') and os.path.isfile(p):\n" +
+            "        name, icon, nodisp, hidden = entry[:-8], 'application-x-executable', False, False\n" +
+            "        in_main = False\n" +
+            "        try:\n" +
+            "            for line in open(p, errors='ignore'):\n" +
+            "                s = line.strip()\n" +
+            "                if s.startswith('['): in_main = (s == '[Desktop Entry]'); continue\n" +
+            "                if not in_main or '=' not in s: continue\n" +
+            "                k, v = s.split('=', 1)\n" +
+            "                if k == 'Name' and v: name = v\n" +
+            "                elif k == 'Icon' and v: icon = v\n" +
+            "                elif k == 'NoDisplay' and v.lower() == 'true': nodisp = True\n" +
+            "                elif k == 'Hidden' and v.lower() == 'true': hidden = True\n" +
+            "        except Exception: pass\n" +
+            "        if not nodisp and not hidden:\n" +
+            "            out.append({'name': name, 'icon': icon, 'target': p, 'fromFolder': true})\n" +
+            "    elif os.path.isdir(p):\n" +
+            "        out.append({'name': entry, 'icon': 'folder', 'target': p, 'fromFolder': true})\n" +
+            "    elif os.path.isfile(p):\n" +
+            "        out.append({'name': entry, 'icon': 'application-x-executable', 'target': p, 'fromFolder': true})\n" +
+            "print(json.dumps(out))\n"
+        folderScanner.connectSource("echo '" + Qt.btoa(py) + "' | base64 -d | python3 - " + shellQuote(dir))
+    }
 
     P5Support.DataSource {
         id: launcher
@@ -85,17 +164,27 @@ PlasmoidItem {
 
     function moveItem(fromIndex, toIndex) {
         if (fromIndex < 0 || fromIndex >= root.apps.length || toIndex < 0 || toIndex >= root.apps.length || fromIndex === toIndex) return
-        const next = root.apps.slice()
-        const moved = next.splice(fromIndex, 1)[0]
-        next.splice(toIndex, 0, moved)
-        Plasmoid.configuration.appsJson = JSON.stringify(next)
+        const fromItem = root.apps[fromIndex]
+        const toItem = root.apps[toIndex]
+        if (!fromItem || !toItem || fromItem.fromFolder || toItem.fromFolder) return
+        const manual = root.manualApps.slice()
+        const mFrom = manual.findIndex(x => x.target === fromItem.target && x.name === fromItem.name)
+        const mTo = manual.findIndex(x => x.target === toItem.target && x.name === toItem.name)
+        if (mFrom < 0 || mTo < 0 || mFrom === mTo) return
+        const moved = manual.splice(mFrom, 1)[0]
+        manual.splice(mTo, 0, moved)
+        Plasmoid.configuration.appsJson = JSON.stringify(manual)
     }
 
     function removeItem(index) {
         if (index < 0 || index >= root.apps.length) return
-        const next = root.apps.slice()
-        next.splice(index, 1)
-        Plasmoid.configuration.appsJson = JSON.stringify(next)
+        const item = root.apps[index]
+        if (!item || item.fromFolder) return
+        const manual = root.manualApps.slice()
+        const mIdx = manual.findIndex(x => x.target === item.target && x.name === item.name)
+        if (mIdx < 0) return
+        manual.splice(mIdx, 1)
+        Plasmoid.configuration.appsJson = JSON.stringify(manual)
     }
 
     function addDroppedUrls(urls) {

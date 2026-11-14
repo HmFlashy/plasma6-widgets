@@ -26,5 +26,8 @@
         <entry name="appsJson" type="String">
             <default>[]</default>
         </entry>
+        <entry name="linkedFolder" type="String">
+            <default></default>
+        </entry>
     </group>
 </kcfg>

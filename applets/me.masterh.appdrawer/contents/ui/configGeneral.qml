@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls as QQC2
+import QtQuick.Dialogs
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.kcmutils as KCM
@@ -9,6 +10,7 @@ KCM.SimpleKCM {
     id: configRoot
 
     property alias cfg_title: titleField.text
+    property alias cfg_linkedFolder: linkedFolderField.text
     property alias cfg_previewGrid: previewGridSpin.value
     property alias cfg_popupIconSize: iconSizeSpin.value
     property alias cfg_customPopupWidth: widthSpin.value
@@ -80,9 +82,19 @@ KCM.SimpleKCM {
 
         const py =
             "import glob, json, os\n" +
-            "dirs = [os.path.expanduser('~/.local/share/applications'), '/usr/share/applications', os.path.expanduser('~/.local/share/flatpak/exports/share/applications'), '/var/lib/flatpak/exports/share/applications']\n" +
+            "dirs = [\n" +
+            "    os.path.expanduser('~/.local/share/applications'),\n" +
+            "    '/usr/local/share/applications',\n" +
+            "    '/usr/share/applications',\n" +
+            "    os.path.expanduser('~/.local/share/flatpak/exports/share/applications'),\n" +
+            "    '/var/lib/flatpak/exports/share/applications',\n" +
+            "    '/var/lib/snapd/desktop/applications',\n" +
+            "    os.path.expanduser('~/Desktop'),\n" +
+            "    os.path.expanduser('~/Bureau'),\n" +
+            "]\n" +
             "seen = {}\n" +
             "for d in dirs:\n" +
+            "    if not os.path.isdir(d): continue\n" +
             "    for p in sorted(glob.glob(os.path.join(d, '*.desktop'))):\n" +
             "        bid = os.path.basename(p)\n" +
             "        if bid in seen: continue\n" +
@@ -102,7 +114,7 @@ KCM.SimpleKCM {
             "        if name and not nodisp and not hidden:\n" +
             "            seen[bid] = {'name': name, 'icon': icon, 'target': p}\n" +
             "print(json.dumps(sorted(seen.values(), key=lambda x: x['name'].lower())))\n"
-        appScanner.connectSource("python3 -c \"" + py.replace(/"/g, '\\"').replace(/\n/g, "\\n") + "\"")
+        appScanner.connectSource("echo '" + Qt.btoa(py) + "' | base64 -d | python3 -")
     }
 
     readonly property var filteredInstalled: {
@@ -121,6 +133,41 @@ KCM.SimpleKCM {
                 id: titleField
                 Kirigami.FormData.label: "Group name:"
                 placeholderText: "e.g. Dev, Games, AI…"
+            }
+
+            RowLayout {
+                Kirigami.FormData.label: "Linked folder:"
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.smallSpacing
+
+                QQC2.TextField {
+                    id: linkedFolderField
+                    Layout.fillWidth: true
+                    placeholderText: "Optional — auto-sync .desktop apps & files from a folder"
+                }
+
+                QQC2.Button {
+                    icon.name: "folder-open"
+                    text: "Browse…"
+                    onClicked: folderDialog.open()
+                }
+
+                QQC2.Button {
+                    icon.name: "edit-clear"
+                    QQC2.ToolTip.text: "Unlink folder"
+                    QQC2.ToolTip.visible: hovered
+                    enabled: linkedFolderField.text.length > 0
+                    onClicked: linkedFolderField.text = ""
+                }
+            }
+
+            FolderDialog {
+                id: folderDialog
+                title: "Select a folder to link to App Drawer"
+                onAccepted: {
+                    const p = decodeURIComponent(selectedFolder.toString().replace(/^file:\/\//, ""))
+                    linkedFolderField.text = p
+                }
             }
 
             QQC2.SpinBox {
