@@ -321,6 +321,7 @@ PlasmoidItem {
             }
 
             Item {
+                id: gridContainer
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
@@ -348,10 +349,14 @@ PlasmoidItem {
 
                 GridView {
                     id: appGrid
-                    anchors.fill: parent
+                    readonly property int displayCols: Math.max(1, Math.min(fullRoot.effectiveCols, Math.floor(gridContainer.width / fullRoot.cellWidth)))
+                    width: Math.min(gridContainer.width, displayCols * fullRoot.cellWidth)
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
                     visible: root.apps.length > 0
                     clip: true
-                    cellWidth: appGrid.width > 0 ? Math.floor(appGrid.width / fullRoot.effectiveCols) : fullRoot.cellWidth
+                    cellWidth: Math.min(width, fullRoot.cellWidth)
                     cellHeight: fullRoot.cellHeight
                     model: root.apps
 
