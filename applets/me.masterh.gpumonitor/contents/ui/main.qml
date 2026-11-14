@@ -10,12 +10,15 @@ PlasmoidItem {
     id: root
 
     property bool gpuActive: false
+    property string gpuName: "NVIDIA GPU"
     property real gpuUtil: 0
     property real gpuTemp: 0
     property real gpuClock: 0
+    property real gpuMaxClock: 2000
     property real gpuVramUsed: 0
     property real gpuVramTotal: 4096
     property real gpuPower: 0
+    property real gpuMaxPower: 80
 
     property var utilHistory: []
     property var tempHistory: []
@@ -30,8 +33,8 @@ PlasmoidItem {
     readonly property bool inEditMode: Plasmoid.containment && Plasmoid.containment.corona ? Plasmoid.containment.corona.editMode : false
     readonly property bool showCard: root.gpuActive || !root.hideWhenSuspended || root.inEditMode
 
-    readonly property string passiveCmd: "cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_status 2>/dev/null"
-    readonly property string activeCmd: "s=$(cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_status 2>/dev/null); if [ \"$s\" = \"active\" ]; then nvidia-smi --query-gpu=utilization.gpu,temperature.gpu,clocks.current.graphics,memory.used,memory.total,power.draw --format=csv,noheader,nounits 2>/dev/null; else echo SUSPENDED; fi"
+    readonly property string passiveCmd: "for d in /sys/bus/pci/devices/*; do v=$(cat \"$d/vendor\" 2>/dev/null); c=$(cat \"$d/class\" 2>/dev/null); if [ \"$v\" = \"0x10de\" ] && { [ \"${c#0x0300}\" != \"$c\" ] || [ \"${c#0x0302}\" != \"$c\" ]; }; then cat \"$d/power/runtime_status\" 2>/dev/null || echo active; exit 0; fi; done"
+    readonly property string activeCmd: "s=active; for d in /sys/bus/pci/devices/*; do v=$(cat \"$d/vendor\" 2>/dev/null); c=$(cat \"$d/class\" 2>/dev/null); if [ \"$v\" = \"0x10de\" ] && { [ \"${c#0x0300}\" != \"$c\" ] || [ \"${c#0x0302}\" != \"$c\" ]; }; then s=$(cat \"$d/power/runtime_status\" 2>/dev/null || echo active); break; fi; done; if [ \"$s\" = \"active\" ]; then nvidia-smi --query-gpu=utilization.gpu,temperature.gpu,clocks.current.graphics,memory.used,memory.total,power.draw,clocks.max.graphics,power.limit,name --format=csv,noheader,nounits 2>/dev/null | head -n1; else echo SUSPENDED; fi"
     readonly property string checkCmd: cooldownTicks > 0 ? passiveCmd : activeCmd
 
     preferredRepresentation: fullRepresentation
@@ -81,7 +84,20 @@ PlasmoidItem {
                 var vu = parseFloat(parts[3].trim())
                 var vt = parseFloat(parts[4].trim())
                 var pw = parseFloat(parts[5].trim())
+                var mc = parts.length > 6 ? parseFloat(parts[6].trim()) : NaN
+                var pl = parts.length > 7 ? parseFloat(parts[7].trim()) : NaN
+                var rawName = parts.length > 8 ? parts.slice(8).join(",").trim() : ""
                 root.gpuActive = true
+                if (rawName) {
+                    var cleanName = rawName.replace(/^NVIDIA\s+(GeForce\s+)?/, "").trim()
+                    if (cleanName) root.gpuName = cleanName
+                }
+                if (!isNaN(mc) && mc > 0) { root.gpuMaxClock = mc }
+                if (!isNaN(pl) && pl > 0) {
+                    root.gpuMaxPower = pl
+                } else if (!isNaN(pw) && pw > root.gpuMaxPower) {
+                    root.gpuMaxPower = Math.ceil(pw / 20) * 20
+                }
                 if (!isNaN(u)) { root.gpuUtil = u; root.utilHistory = root.pushSample(root.utilHistory, u) }
                 if (!isNaN(t)) { root.gpuTemp = t; root.tempHistory = root.pushSample(root.tempHistory, t) }
                 if (!isNaN(c)) { root.gpuClock = c; root.clockHistory = root.pushSample(root.clockHistory, c) }
@@ -221,7 +237,7 @@ PlasmoidItem {
 
             PlasmaComponents.Label {
                 Layout.alignment: Qt.AlignHCenter
-                text: root.gpuActive ? "RTX 3050" : "RTX 3050 (en veille)"
+                text: root.gpuActive ? root.gpuName : root.gpuName + " (en veille)"
                 font.pointSize: Kirigami.Theme.defaultFont.pointSize * 1.15
                 opacity: root.gpuActive ? 0.95 : 0.6
             }
@@ -247,7 +263,7 @@ PlasmoidItem {
                 MiniChart {
                     visible: Plasmoid.configuration.showClock
                     samples: root.clockHistory
-                    maxValue: 2000
+                    maxValue: root.gpuMaxClock
                     lineColor: Plasmoid.configuration.clockColor
                     labelText: "Fréquence"
                     valueText: (root.gpuClock / 1000).toFixed(2) + " GHz"
@@ -277,7 +293,7 @@ PlasmoidItem {
                 MiniChart {
                     visible: Plasmoid.configuration.showPower
                     samples: root.powerHistory
-                    maxValue: 80
+                    maxValue: root.gpuMaxPower
                     lineColor: Plasmoid.configuration.powerColor
                     labelText: "Puissance"
                     valueText: Math.round(root.gpuPower) + " W"

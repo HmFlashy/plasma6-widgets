@@ -12,8 +12,8 @@ Panel app-folder widget with a live 2×2 or 3×3 mini-icon preview directly in t
 - Right-click context menu & drag-to-reorder inside the popup
 - Configurable columns, icon size, preview grid (`2×2` / `3×3`), and custom popup dimensions
 
-### 2. `me.masterh.gpu3050` — RTX 3050 Monitor
-Lightweight panel/desktop monitor showing GPU utilization (%) and temperature (°C) only when the NVIDIA dGPU is active (`D0`), avoiding unnecessary wakeups while suspended (`D3cold`).
+### 2. `me.masterh.gpumonitor` — NVIDIA GPU Monitor
+Lightweight panel/desktop monitor showing GPU utilization, temperature, clock speed, VRAM, and power draw only when an NVIDIA GPU is active (`D0`), auto-detecting the PCI device and GPU name while preserving `D3cold` sleep on hybrid laptops.
 
 ## Installation
 

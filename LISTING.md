@@ -25,16 +25,16 @@ A lightweight KDE Plasma 6 panel widget that groups applications, folders, and w
 
 ---
 
-## 2. RTX 3050 Monitor (`me.masterh.gpu3050`)
+## 2. NVIDIA GPU Monitor (`me.masterh.gpumonitor`)
 
-- **Name**: `RTX 3050 Monitor`
+- **Name**: `NVIDIA GPU Monitor`
 - **Category**: `Plasma 6 Applets`
 - **License**: `GPL-3.0`
 - **Version**: `1.0`
 - **Source / Website**: `https://masterh.me` (`https://github.com/HmFlashy/plasma6-widgets`)
-- **Package file**: `me.masterh.gpu3050-1.0.plasmoid`
+- **Package file**: `me.masterh.gpumonitor-1.0.plasmoid`
 
 ### Description
 ```markdown
-Lightweight KDE Plasma 6 panel/desktop monitor that displays NVIDIA GPU utilization (%) and temperature (°C) only when the discrete GPU is active (`D0`), avoiding unnecessary wakeups while suspended (`D3cold`).
+Lightweight KDE Plasma 6 panel/desktop monitor that displays NVIDIA GPU utilization, temperature, clock speed, VRAM, and power draw only when the GPU is active (`D0`), auto-detecting the NVIDIA PCI device and GPU name while preserving `D3cold` sleep on hybrid laptops.
 ```

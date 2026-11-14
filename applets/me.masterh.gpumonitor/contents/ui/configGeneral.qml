@@ -25,7 +25,7 @@ KCM.SimpleKCM {
         QQC2.CheckBox {
             id: hideCheck
             Kirigami.FormData.label: "Comportement :"
-            text: "Masquer automatiquement quand la 3050 est en veille"
+            text: "Masquer automatiquement quand le GPU est en veille"
         }
 
         QQC2.SpinBox {

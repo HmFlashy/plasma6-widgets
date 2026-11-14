@@ -6,11 +6,11 @@
             }
         ],
         "Category": "System Information",
-        "Description": "Affiche l'utilisation (%) et la température (°C) de la RTX 3050 uniquement lorsqu'elle est active",
+        "Description": "Moniteur GPU NVIDIA léger (utilisation, température, fréquence, VRAM, puissance) avec mise en veille D3cold préservée",
         "Icon": "nvidia",
-        "Id": "me.masterh.gpu3050",
+        "Id": "me.masterh.gpumonitor",
         "License": "GPL-3.0",
-        "Name": "RTX 3050 Monitor",
+        "Name": "NVIDIA GPU Monitor",
         "Version": "1.0",
         "Website": "https://masterh.me"
     },
