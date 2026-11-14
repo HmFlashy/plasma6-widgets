@@ -278,6 +278,13 @@ PlasmoidItem {
         readonly property int autoWidth: Math.max(headerRow.implicitWidth + Kirigami.Units.largeSpacing * 2, (root.apps.length === 0 ? Kirigami.Units.gridUnit * 10 : effectiveCols * cellWidth) + Kirigami.Units.largeSpacing * 2)
         readonly property int autoHeight: headerRow.implicitHeight + (root.apps.length === 0 ? Kirigami.Units.gridUnit * 5 : visibleRows * cellHeight) + Kirigami.Units.largeSpacing * 2 + Kirigami.Units.smallSpacing * 2 + 2
 
+        Timer {
+            id: reopenTimer
+            interval: 60
+            repeat: false
+            onTriggered: root.expanded = true
+        }
+
         function resetPopupSize() {
             Plasmoid.configuration.customPopupWidth = 0
             Plasmoid.configuration.customPopupHeight = 0
@@ -289,7 +296,7 @@ PlasmoidItem {
                 win.height = fullRoot.autoHeight + padH
             }
             root.expanded = false
-            Qt.callLater(function() { root.expanded = true })
+            reopenTimer.restart()
         }
 
         implicitWidth: Plasmoid.configuration.customPopupWidth > 0 ? Plasmoid.configuration.customPopupWidth : autoWidth
