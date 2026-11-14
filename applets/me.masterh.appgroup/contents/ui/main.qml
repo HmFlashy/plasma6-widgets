@@ -351,7 +351,7 @@ PlasmoidItem {
                     anchors.fill: parent
                     visible: root.apps.length > 0
                     clip: true
-                    cellWidth: fullRoot.cellWidth
+                    cellWidth: appGrid.width > 0 ? Math.floor(appGrid.width / fullRoot.effectiveCols) : fullRoot.cellWidth
                     cellHeight: fullRoot.cellHeight
                     model: root.apps
 
