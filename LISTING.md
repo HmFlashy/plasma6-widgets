@@ -1,13 +1,13 @@
 # KDE Store (`store.kde.org`) — Product Listings
 
-## 1. Dossier d'applications (`com.masterh.appgroup`)
+## 1. Dossier d'applications (`me.masterh.appgroup`)
 
 - **Name**: `Dossier d'applications (App Group)`
 - **Category**: `Plasma 6 Applets`
 - **License**: `GPL-3.0`
 - **Version**: `1.1`
 - **Source / Website**: `https://masterh.me` (`https://github.com/HmFlashy/plasma6-widgets`)
-- **Package file**: `com.masterh.appgroup-1.1.plasmoid`
+- **Package file**: `me.masterh.appgroup-1.1.plasmoid`
 
 ### Description
 ```markdown
@@ -25,14 +25,14 @@ A lightweight KDE Plasma 6 panel widget that groups applications, folders, and w
 
 ---
 
-## 2. RTX 3050 Monitor (`com.masterh.gpu3050`)
+## 2. RTX 3050 Monitor (`me.masterh.gpu3050`)
 
 - **Name**: `RTX 3050 Monitor`
 - **Category**: `Plasma 6 Applets`
 - **License**: `GPL-3.0`
 - **Version**: `1.0`
 - **Source / Website**: `https://masterh.me` (`https://github.com/HmFlashy/plasma6-widgets`)
-- **Package file**: `com.masterh.gpu3050-1.0.plasmoid`
+- **Package file**: `me.masterh.gpu3050-1.0.plasmoid`
 
 ### Description
 ```markdown

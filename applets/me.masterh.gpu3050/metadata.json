@@ -8,7 +8,7 @@
         "Category": "System Information",
         "Description": "Affiche l'utilisation (%) et la température (°C) de la RTX 3050 uniquement lorsqu'elle est active",
         "Icon": "nvidia",
-        "Id": "com.masterh.gpu3050",
+        "Id": "me.masterh.gpu3050",
         "License": "GPL-3.0",
         "Name": "RTX 3050 Monitor",
         "Version": "1.0",

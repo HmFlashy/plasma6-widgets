@@ -8,7 +8,7 @@
         "Category": "Application Launchers",
         "Description": "Dossier d'applications avec aperçu 2x2 ou 3x3 des icônes directement dans la barre des tâches",
         "Icon": "folder-activities",
-        "Id": "com.masterh.appgroup",
+        "Id": "me.masterh.appgroup",
         "License": "GPL-3.0",
         "Name": "Dossier d'applications",
         "Version": "1.1",
