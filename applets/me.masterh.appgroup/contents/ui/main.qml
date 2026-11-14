@@ -349,7 +349,7 @@ PlasmoidItem {
 
                 GridView {
                     id: appGrid
-                    readonly property int displayCols: Math.max(1, Math.min(fullRoot.effectiveCols, Math.floor(gridContainer.width / fullRoot.cellWidth)))
+                    readonly property int displayCols: Math.max(1, Math.min(root.apps.length, Math.floor(gridContainer.width / fullRoot.cellWidth)))
                     width: Math.min(gridContainer.width, displayCols * fullRoot.cellWidth)
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top

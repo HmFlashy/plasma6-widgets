@@ -9,7 +9,6 @@ KCM.SimpleKCM {
     id: configRoot
 
     property alias cfg_title: titleField.text
-    property alias cfg_columns: columnsSpin.value
     property alias cfg_previewGrid: previewGridSpin.value
     property alias cfg_popupIconSize: iconSizeSpin.value
     property alias cfg_customPopupWidth: widthSpin.value
@@ -122,13 +121,6 @@ KCM.SimpleKCM {
                 id: titleField
                 Kirigami.FormData.label: "Nom du groupe :"
                 placeholderText: "Ex: Torrent, Dev, Jeux…"
-            }
-
-            QQC2.SpinBox {
-                id: columnsSpin
-                Kirigami.FormData.label: "Colonnes du popup :"
-                from: 2
-                to: 6
             }
 
             QQC2.SpinBox {
