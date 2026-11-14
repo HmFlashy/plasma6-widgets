@@ -1,0 +1,19 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "MasterH"
+            }
+        ],
+        "Category": "System Information",
+        "Description": "Affiche l'utilisation (%) et la température (°C) de la RTX 3050 uniquement lorsqu'elle est active",
+        "Icon": "nvidia",
+        "Id": "com.masterh.gpu3050",
+        "License": "GPL-3.0",
+        "Name": "RTX 3050 Monitor",
+        "Version": "1.0",
+        "Website": "https://github.com/HmFlashy/plasma6-widgets"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "KPackageStructure": "Plasma/Applet"
+}

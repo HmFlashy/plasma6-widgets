@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+    <kcfgfile name=""/>
+    <group name="General">
+        <entry name="hideWhenSuspended" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="intervalMs" type="Int">
+            <default>1500</default>
+        </entry>
+        <entry name="maxSamples" type="Int">
+            <default>45</default>
+        </entry>
+        <entry name="showTemp" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showClock" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showUtil" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showVram" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="showPower" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="tempColor" type="String">
+            <default>#27ae60</default>
+        </entry>
+        <entry name="clockColor" type="String">
+            <default>#2c34b5</default>
+        </entry>
+        <entry name="utilColor" type="String">
+            <default>#a04800</default>
+        </entry>
+        <entry name="vramColor" type="String">
+            <default>#8e44ad</default>
+        </entry>
+        <entry name="powerColor" type="String">
+            <default>#e74c3c</default>
+        </entry>
+    </group>
+</kcfg>

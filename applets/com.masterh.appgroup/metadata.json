@@ -1,0 +1,19 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "MasterH"
+            }
+        ],
+        "Category": "Application Launchers",
+        "Description": "Dossier d'applications avec aperçu 2x2 ou 3x3 des icônes directement dans la barre des tâches",
+        "Icon": "folder-activities",
+        "Id": "com.masterh.appgroup",
+        "License": "GPL-3.0",
+        "Name": "Dossier d'applications",
+        "Version": "1.1",
+        "Website": "https://github.com/HmFlashy/plasma6-widgets"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "KPackageStructure": "Plasma/Applet"
+}
