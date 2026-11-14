@@ -6,7 +6,7 @@
 - **Category**: `Plasma 6 Applets`
 - **License**: `GPL-3.0`
 - **Version**: `1.1`
-- **Source / Website**: `https://github.com/HmFlashy/plasma6-widgets`
+- **Source / Website**: `https://masterh.me` (`https://github.com/HmFlashy/plasma6-widgets`)
 - **Package file**: `com.masterh.appgroup-1.1.plasmoid`
 
 ### Description
@@ -31,7 +31,7 @@ A lightweight KDE Plasma 6 panel widget that groups applications, folders, and w
 - **Category**: `Plasma 6 Applets`
 - **License**: `GPL-3.0`
 - **Version**: `1.0`
-- **Source / Website**: `https://github.com/HmFlashy/plasma6-widgets`
+- **Source / Website**: `https://masterh.me` (`https://github.com/HmFlashy/plasma6-widgets`)
 - **Package file**: `com.masterh.gpu3050-1.0.plasmoid`
 
 ### Description

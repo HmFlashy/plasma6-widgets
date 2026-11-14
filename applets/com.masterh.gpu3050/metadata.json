@@ -12,7 +12,7 @@
         "License": "GPL-3.0",
         "Name": "RTX 3050 Monitor",
         "Version": "1.0",
-        "Website": "https://github.com/HmFlashy/plasma6-widgets"
+        "Website": "https://masterh.me"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "KPackageStructure": "Plasma/Applet"
