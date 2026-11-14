@@ -288,6 +288,7 @@ PlasmoidItem {
         function resetPopupSize() {
             Plasmoid.configuration.customPopupWidth = 0
             Plasmoid.configuration.customPopupHeight = 0
+            appGrid.contentY = 0
             var win = fullRoot.Window.window
             if (win) {
                 var padW = Math.max(0, win.width - fullRoot.width)
@@ -389,6 +390,11 @@ PlasmoidItem {
                     anchors.centerIn: parent
                     visible: root.apps.length > 0
                     clip: true
+                    interactive: contentHeight > height
+                    onContentHeightChanged: if (contentHeight <= height) contentY = 0
+                    onHeightChanged: if (contentHeight <= height) contentY = 0
+                    onDisplayColsChanged: contentY = 0
+                    onModelChanged: contentY = 0
                     cellWidth: Math.min(width, fullRoot.cellWidth)
                     cellHeight: fullRoot.cellHeight
                     model: root.apps
