@@ -269,8 +269,11 @@ PlasmoidItem {
         id: fullRoot
         readonly property int cellWidth: Math.max(Kirigami.Units.gridUnit * 4.6, root.tileIconSize + Kirigami.Units.gridUnit * 2.0)
         readonly property int cellHeight: Math.max(Kirigami.Units.gridUnit * 4.8, root.tileIconSize + Kirigami.Units.gridUnit * 2.4)
-        readonly property int effectiveCols: root.apps.length === 0 ? 1 : Math.min(root.gridColumns, root.apps.length)
-        readonly property int visibleRows: Math.max(1, Math.min(4, Math.ceil(Math.max(1, root.apps.length) / root.gridColumns)))
+        readonly property int effectiveCols: root.apps.length <= 1 ? 1
+            : (root.apps.length <= 3 ? root.apps.length
+            : (root.apps.length === 4 ? 2
+            : (root.apps.length <= 9 ? 3 : 4)))
+        readonly property int visibleRows: Math.max(1, Math.min(4, Math.ceil(Math.max(1, root.apps.length) / effectiveCols)))
         readonly property int autoWidth: Math.max(Kirigami.Units.gridUnit * 12, effectiveCols * cellWidth + Kirigami.Units.largeSpacing * 2)
         readonly property int autoHeight: headerRow.implicitHeight + (root.apps.length === 0 ? Kirigami.Units.gridUnit * 6 : visibleRows * cellHeight) + Kirigami.Units.largeSpacing * 3 + Kirigami.Units.smallSpacing * 2
 
@@ -350,10 +353,10 @@ PlasmoidItem {
                 GridView {
                     id: appGrid
                     readonly property int displayCols: Math.max(1, Math.min(root.apps.length, Math.floor(gridContainer.width / fullRoot.cellWidth)))
+                    readonly property int displayRows: Math.max(1, Math.ceil(root.apps.length / displayCols))
                     width: Math.min(gridContainer.width, displayCols * fullRoot.cellWidth)
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
+                    height: Math.min(gridContainer.height, displayRows * fullRoot.cellHeight)
+                    anchors.centerIn: parent
                     visible: root.apps.length > 0
                     clip: true
                     cellWidth: Math.min(width, fullRoot.cellWidth)
