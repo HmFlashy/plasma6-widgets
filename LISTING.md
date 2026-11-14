@@ -1,8 +1,8 @@
 # KDE Store (`store.kde.org`) — Product Listings
 
-## 1. Dossier d'applications (`me.masterh.appgroup`)
+## 1. App Drawer (`me.masterh.appgroup`)
 
-- **Name**: `Dossier d'applications (App Group)`
+- **Name**: `App Drawer`
 - **Category**: `Plasma 6 Applets`
 - **License**: `GPL-3.0`
 - **Version**: `1.1`

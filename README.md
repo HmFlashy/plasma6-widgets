@@ -4,7 +4,7 @@ Collection of custom KDE Plasma 6 widgets (`Plasma/Applet`).
 
 ## Applets
 
-### 1. `me.masterh.appgroup` — Dossier d'applications
+### 1. `me.masterh.appgroup` — App Drawer
 Panel app-folder widget with a live 2×2 or 3×3 mini-icon preview directly in the taskbar:
 - Hover animations on both the panel icon and the mini-icons inside
 - Drag-and-drop apps (`.desktop`, Kickoff `applications:...`), folders, and web URLs
