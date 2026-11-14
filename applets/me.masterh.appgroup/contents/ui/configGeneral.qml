@@ -119,20 +119,20 @@ KCM.SimpleKCM {
 
             QQC2.TextField {
                 id: titleField
-                Kirigami.FormData.label: "Nom du groupe :"
-                placeholderText: "Ex: Torrent, Dev, Jeux…"
+                Kirigami.FormData.label: "Group name:"
+                placeholderText: "e.g. Dev, Games, AI…"
             }
 
             QQC2.SpinBox {
                 id: previewGridSpin
-                Kirigami.FormData.label: "Aperçu dans la barre (2=2×2, 3=3×3) :"
+                Kirigami.FormData.label: "Panel preview (2=2×2, 3=3×3):"
                 from: 2
                 to: 3
             }
 
             QQC2.SpinBox {
                 id: iconSizeSpin
-                Kirigami.FormData.label: "Taille icônes du popup (px) :"
+                Kirigami.FormData.label: "Popup icon size (px):"
                 from: 24
                 to: 96
                 stepSize: 8
@@ -140,7 +140,7 @@ KCM.SimpleKCM {
 
             QQC2.SpinBox {
                 id: widthSpin
-                Kirigami.FormData.label: "Largeur du popup (px, 0 = auto) :"
+                Kirigami.FormData.label: "Popup width (px, 0 = auto):"
                 from: 0
                 to: 1200
                 stepSize: 20
@@ -148,7 +148,7 @@ KCM.SimpleKCM {
 
             QQC2.SpinBox {
                 id: heightSpin
-                Kirigami.FormData.label: "Hauteur du popup (px, 0 = auto) :"
+                Kirigami.FormData.label: "Popup height (px, 0 = auto):"
                 from: 0
                 to: 900
                 stepSize: 20
@@ -157,7 +157,7 @@ KCM.SimpleKCM {
 
         Kirigami.Heading {
             level: 4
-            text: "Applications dans ce groupe (" + currentApps.length + ")"
+            text: "Applications in this group (" + currentApps.length + ")"
         }
 
         QQC2.Frame {
@@ -208,12 +208,12 @@ KCM.SimpleKCM {
 
         Kirigami.Heading {
             level: 4
-            text: "Ajouter une application"
+            text: "Add an application"
         }
 
         QQC2.TextField {
             Layout.fillWidth: true
-            placeholderText: "Rechercher une application installée (ex: qbittorrent, chrome, dolphin…)"
+            placeholderText: "Search installed applications (e.g. firefox, code, dolphin…)"
             onTextChanged: configRoot.searchQuery = text
         }
 
@@ -244,7 +244,7 @@ KCM.SimpleKCM {
 
                         QQC2.Button {
                             icon.name: "list-add"
-                            text: "Ajouter"
+                            text: "Add"
                             onClicked: configRoot.addApp(modelData)
                         }
                     }
@@ -254,7 +254,7 @@ KCM.SimpleKCM {
 
         Kirigami.Heading {
             level: 4
-            text: "Ajouter un lien web (URL) ou commande"
+            text: "Add a web link (URL) or command"
         }
 
         RowLayout {
@@ -264,25 +264,25 @@ KCM.SimpleKCM {
             QQC2.TextField {
                 id: customName
                 Layout.preferredWidth: 140
-                placeholderText: "Nom (ex: qBit)"
+                placeholderText: "Name"
             }
 
             QQC2.TextField {
                 id: customTarget
                 Layout.fillWidth: true
-                placeholderText: "https://qbit.homelab ou cmd:..."
+                placeholderText: "https://... or cmd:..."
             }
 
             QQC2.TextField {
                 id: customIcon
                 Layout.preferredWidth: 130
-                placeholderText: "Icône (optionnel)"
+                placeholderText: "Icon (optional)"
                 text: "internet-web-browser"
             }
 
             QQC2.Button {
                 icon.name: "list-add"
-                text: "Ajouter"
+                text: "Add"
                 enabled: customTarget.text.trim().length > 0
                 onClicked: {
                     configRoot.addApp({

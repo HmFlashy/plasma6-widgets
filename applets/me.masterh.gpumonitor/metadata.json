@@ -6,7 +6,7 @@
             }
         ],
         "Category": "System Information",
-        "Description": "Moniteur GPU NVIDIA léger (utilisation, température, fréquence, VRAM, puissance) avec mise en veille D3cold préservée",
+        "Description": "Lightweight NVIDIA GPU monitor (utilization, temperature, clock, VRAM, power) preserving D3cold sleep",
         "Icon": "nvidia",
         "Id": "me.masterh.gpumonitor",
         "License": "GPL-3.0",

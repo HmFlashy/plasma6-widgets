@@ -6,11 +6,11 @@
             }
         ],
         "Category": "Application Launchers",
-        "Description": "Dossier d'applications avec aperçu 2x2 ou 3x3 des icônes directement dans la barre des tâches",
+        "Description": "Panel app folder widget with a live 2x2 or 3x3 mini-icon preview directly in the taskbar",
         "Icon": "folder-activities",
         "Id": "me.masterh.appgroup",
         "License": "GPL-3.0",
-        "Name": "Dossier d'applications",
+        "Name": "App Group Tray",
         "Version": "1.1",
         "Website": "https://masterh.me"
     },

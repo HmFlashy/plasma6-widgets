@@ -24,13 +24,13 @@ KCM.SimpleKCM {
     Kirigami.FormLayout {
         QQC2.CheckBox {
             id: hideCheck
-            Kirigami.FormData.label: "Comportement :"
-            text: "Masquer automatiquement quand le GPU est en veille"
+            Kirigami.FormData.label: "Behavior:"
+            text: "Auto-hide when GPU is suspended"
         }
 
         QQC2.SpinBox {
             id: intervalSpin
-            Kirigami.FormData.label: "Rafraîchissement (ms) :"
+            Kirigami.FormData.label: "Refresh interval (ms):"
             from: 500
             to: 10000
             stepSize: 250
@@ -38,7 +38,7 @@ KCM.SimpleKCM {
 
         QQC2.SpinBox {
             id: samplesSpin
-            Kirigami.FormData.label: "Points d'historique :"
+            Kirigami.FormData.label: "History samples:"
             from: 15
             to: 120
             stepSize: 5
@@ -46,40 +46,40 @@ KCM.SimpleKCM {
 
         Kirigami.Separator {
             Kirigami.FormData.isSection: true
-            Kirigami.FormData.label: "Graphiques affichés & couleurs"
+            Kirigami.FormData.label: "Displayed charts & colors"
         }
 
         RowLayout {
-            Kirigami.FormData.label: "Température :"
-            QQC2.CheckBox { id: tempCheck; text: "Afficher" }
+            Kirigami.FormData.label: "Temperature:"
+            QQC2.CheckBox { id: tempCheck; text: "Show" }
             QQC2.TextField { id: tempColorField; maximumLength: 9; implicitWidth: 90 }
             Rectangle { width: 18; height: 18; radius: 3; color: tempColorField.text }
         }
 
         RowLayout {
-            Kirigami.FormData.label: "Fréquence GPU :"
-            QQC2.CheckBox { id: clockCheck; text: "Afficher" }
+            Kirigami.FormData.label: "GPU Clock:"
+            QQC2.CheckBox { id: clockCheck; text: "Show" }
             QQC2.TextField { id: clockColorField; maximumLength: 9; implicitWidth: 90 }
             Rectangle { width: 18; height: 18; radius: 3; color: clockColorField.text }
         }
 
         RowLayout {
-            Kirigami.FormData.label: "Utilisation (%) :"
-            QQC2.CheckBox { id: utilCheck; text: "Afficher" }
+            Kirigami.FormData.label: "Usage (%):"
+            QQC2.CheckBox { id: utilCheck; text: "Show" }
             QQC2.TextField { id: utilColorField; maximumLength: 9; implicitWidth: 90 }
             Rectangle { width: 18; height: 18; radius: 3; color: utilColorField.text }
         }
 
         RowLayout {
-            Kirigami.FormData.label: "VRAM (Mo) :"
-            QQC2.CheckBox { id: vramCheck; text: "Afficher" }
+            Kirigami.FormData.label: "VRAM (MB):"
+            QQC2.CheckBox { id: vramCheck; text: "Show" }
             QQC2.TextField { id: vramColorField; maximumLength: 9; implicitWidth: 90 }
             Rectangle { width: 18; height: 18; radius: 3; color: vramColorField.text }
         }
 
         RowLayout {
-            Kirigami.FormData.label: "Consommation (W) :"
-            QQC2.CheckBox { id: powerCheck; text: "Afficher" }
+            Kirigami.FormData.label: "Power (W):"
+            QQC2.CheckBox { id: powerCheck; text: "Show" }
             QQC2.TextField { id: powerColorField; maximumLength: 9; implicitWidth: 90 }
             Rectangle { width: 18; height: 18; radius: 3; color: powerColorField.text }
         }

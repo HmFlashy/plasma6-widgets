@@ -248,7 +248,7 @@ PlasmoidItem {
 
             PlasmaComponents.Label {
                 Layout.alignment: Qt.AlignHCenter
-                text: root.gpuActive ? root.gpuName : root.gpuName + " (en veille)"
+                text: root.gpuActive ? root.gpuName : root.gpuName + " (suspended)"
                 font.pointSize: Kirigami.Theme.defaultFont.pointSize * 1.15
                 opacity: root.gpuActive ? 0.95 : 0.6
             }
@@ -266,7 +266,7 @@ PlasmoidItem {
                     samples: root.tempHistory
                     maxValue: 90
                     lineColor: Plasmoid.configuration.tempColor
-                    labelText: "Température"
+                    labelText: "Temperature"
                     valueText: Math.round(root.gpuTemp) + " °C"
                     unitSuffix: " °C"
                 }
@@ -276,7 +276,7 @@ PlasmoidItem {
                     samples: root.clockHistory
                     maxValue: root.gpuMaxClock
                     lineColor: Plasmoid.configuration.clockColor
-                    labelText: "Fréquence"
+                    labelText: "Clock"
                     valueText: (root.gpuClock / 1000).toFixed(2) + " GHz"
                     unitSuffix: " MHz"
                 }
@@ -286,7 +286,7 @@ PlasmoidItem {
                     samples: root.utilHistory
                     maxValue: 100
                     lineColor: Plasmoid.configuration.utilColor
-                    labelText: "Utilisation totale"
+                    labelText: "GPU Usage"
                     valueText: Math.round(root.gpuUtil) + " %"
                     unitSuffix: " %"
                 }
@@ -297,8 +297,8 @@ PlasmoidItem {
                     maxValue: root.gpuVramTotal
                     lineColor: Plasmoid.configuration.vramColor
                     labelText: "VRAM"
-                    valueText: Math.round(root.gpuVramUsed) + " Mo"
-                    unitSuffix: " Mo"
+                    valueText: Math.round(root.gpuVramUsed) + " MB"
+                    unitSuffix: " MB"
                 }
 
                 MiniChart {
@@ -306,7 +306,7 @@ PlasmoidItem {
                     samples: root.powerHistory
                     maxValue: root.gpuMaxPower
                     lineColor: Plasmoid.configuration.powerColor
-                    labelText: "Puissance"
+                    labelText: "Power"
                     valueText: Math.round(root.gpuPower) + " W"
                     unitSuffix: " W"
                 }

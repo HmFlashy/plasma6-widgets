@@ -32,7 +32,7 @@ PlasmoidItem {
 
     toolTipMainText: groupTitle
     toolTipSubText: apps.length === 0
-        ? "Vide — clic droit → Configurer pour ajouter des apps"
+        ? "Empty — right-click → Configure to add apps"
         : apps.length + (apps.length > 1 ? " éléments" : " élément")
 
     P5Support.DataSource {
@@ -305,7 +305,7 @@ PlasmoidItem {
                     checkable: true
                     checked: root.popupPinned
                     display: PlasmaComponents.AbstractButton.IconOnly
-                    PlasmaComponents.ToolTip.text: root.popupPinned ? "Détacher le popup" : "Épingler le popup (reste ouvert)"
+                    PlasmaComponents.ToolTip.text: root.popupPinned ? "Unpin popup" : "Pin popup (keep open)"
                     PlasmaComponents.ToolTip.visible: hovered
                     onToggled: root.popupPinned = checked
                 }
@@ -313,7 +313,7 @@ PlasmoidItem {
                 PlasmaComponents.ToolButton {
                     icon.name: "configure"
                     display: PlasmaComponents.AbstractButton.IconOnly
-                    PlasmaComponents.ToolTip.text: "Configurer le groupe"
+                    PlasmaComponents.ToolTip.text: "Configure group"
                     PlasmaComponents.ToolTip.visible: hovered
                     onClicked: Plasmoid.internalAction("configure").trigger()
                 }
@@ -339,13 +339,13 @@ PlasmoidItem {
                         horizontalAlignment: Text.AlignHCenter
                         wrapMode: Text.WordWrap
                         opacity: 0.75
-                        text: "Aucune application.\nGlisse des apps ici ou clique sur Configurer."
+                        text: "No applications.\nDrop apps here or click Configure."
                     }
 
                     PlasmaComponents.Button {
                         Layout.alignment: Qt.AlignHCenter
                         icon.name: "list-add"
-                        text: "Ajouter des applications"
+                        text: "Add applications"
                         onClicked: Plasmoid.internalAction("configure").trigger()
                     }
                 }
