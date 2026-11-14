@@ -12,8 +12,8 @@ KCM.SimpleKCM {
     property alias cfg_columns: columnsSpin.value
     property alias cfg_previewGrid: previewGridSpin.value
     property alias cfg_popupIconSize: iconSizeSpin.value
-    property alias cfg_popupWidth: widthSpin.value
-    property alias cfg_popupHeight: heightSpin.value
+    property alias cfg_customPopupWidth: widthSpin.value
+    property alias cfg_customPopupHeight: heightSpin.value
     property string cfg_appsJson: "[]"
 
     property var currentApps: []

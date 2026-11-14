@@ -17,10 +17,10 @@
         <entry name="popupIconSize" type="Int">
             <default>48</default>
         </entry>
-        <entry name="popupWidth" type="Int">
+        <entry name="customPopupWidth" type="Int">
             <default>0</default>
         </entry>
-        <entry name="popupHeight" type="Int">
+        <entry name="customPopupHeight" type="Int">
             <default>0</default>
         </entry>
         <entry name="appsJson" type="String">
