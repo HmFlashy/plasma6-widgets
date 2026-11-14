@@ -130,10 +130,14 @@ PlasmoidItem {
 
         Layout.fillWidth: true
         Layout.fillHeight: true
+        implicitHeight: innerCol.implicitHeight
+        Layout.minimumHeight: innerCol.implicitHeight
+        clip: true
 
         onSamplesChanged: canvas.requestPaint()
 
         ColumnLayout {
+            id: innerCol
             anchors.fill: parent
             spacing: 4
 
@@ -223,10 +227,17 @@ PlasmoidItem {
     }
 
     fullRepresentation: Item {
+        readonly property int visibleCharts: (Plasmoid.configuration.showTemp ? 1 : 0)
+            + (Plasmoid.configuration.showClock ? 1 : 0)
+            + (Plasmoid.configuration.showUtil ? 1 : 0)
+            + (Plasmoid.configuration.showVram ? 1 : 0)
+            + (Plasmoid.configuration.showPower ? 1 : 0)
+        readonly property int chartRows: Math.max(1, Math.ceil(visibleCharts / 2))
+
         Layout.minimumWidth: Kirigami.Units.gridUnit * 18
-        Layout.minimumHeight: Kirigami.Units.gridUnit * 12
+        Layout.minimumHeight: Kirigami.Units.gridUnit * (3 + chartRows * 5)
         Layout.preferredWidth: Kirigami.Units.gridUnit * 24
-        Layout.preferredHeight: Kirigami.Units.gridUnit * 15
+        Layout.preferredHeight: Kirigami.Units.gridUnit * (3.5 + chartRows * 5.8)
 
         visible: root.showCard
 
