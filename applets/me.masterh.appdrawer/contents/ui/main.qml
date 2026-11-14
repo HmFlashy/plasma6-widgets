@@ -283,8 +283,10 @@ PlasmoidItem {
             Plasmoid.configuration.customPopupHeight = 0
             var win = fullRoot.Window.window
             if (win) {
-                win.width = fullRoot.autoWidth
-                win.height = fullRoot.autoHeight
+                var padW = Math.max(0, win.width - fullRoot.width)
+                var padH = Math.max(0, win.height - fullRoot.height)
+                win.width = fullRoot.autoWidth + padW
+                win.height = fullRoot.autoHeight + padH
             }
             root.expanded = false
             Qt.callLater(function() { root.expanded = true })
@@ -373,7 +375,7 @@ PlasmoidItem {
 
                 GridView {
                     id: appGrid
-                    readonly property int displayCols: Math.max(1, Math.min(root.apps.length, Math.floor(gridContainer.width / fullRoot.cellWidth)))
+                    readonly property int displayCols: Math.max(1, Math.min(root.apps.length, Math.floor((gridContainer.width + 2) / fullRoot.cellWidth)))
                     readonly property int displayRows: Math.max(1, Math.ceil(root.apps.length / displayCols))
                     width: Math.min(gridContainer.width, displayCols * fullRoot.cellWidth)
                     height: Math.min(gridContainer.height, displayRows * fullRoot.cellHeight)
