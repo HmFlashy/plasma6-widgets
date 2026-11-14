@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls as QQC2
 import QtQuick.Layouts
+import QtQuick.Window
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents
@@ -280,11 +281,10 @@ PlasmoidItem {
         function resetPopupSize() {
             Plasmoid.configuration.customPopupWidth = 0
             Plasmoid.configuration.customPopupHeight = 0
-            if (Plasmoid.configuration.popupWidth !== undefined) Plasmoid.configuration.popupWidth = 0
-            if (Plasmoid.configuration.popupHeight !== undefined) Plasmoid.configuration.popupHeight = 0
-            if (fullRoot.Window.window) {
-                fullRoot.Window.window.width = fullRoot.autoWidth
-                fullRoot.Window.window.height = fullRoot.autoHeight
+            var win = fullRoot.Window.window
+            if (win) {
+                win.width = fullRoot.autoWidth
+                win.height = fullRoot.autoHeight
             }
             root.expanded = false
             Qt.callLater(function() { root.expanded = true })
