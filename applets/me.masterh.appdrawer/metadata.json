@@ -8,7 +8,7 @@
         "Category": "Application Launchers",
         "Description": "Panel app folder widget with a live 2x2 or 3x3 mini-icon preview directly in the taskbar",
         "Icon": "folder-activities",
-        "Id": "me.masterh.appgroup",
+        "Id": "me.masterh.appdrawer",
         "License": "GPL-3.0",
         "Name": "App Drawer",
         "Version": "1.1",

@@ -1,13 +1,13 @@
 # KDE Store (`store.kde.org`) — Product Listings
 
-## 1. App Drawer (`me.masterh.appgroup`)
+## 1. App Drawer (`me.masterh.appdrawer`)
 
 - **Name**: `App Drawer`
 - **Category**: `Plasma 6 Applets`
 - **License**: `GPL-3.0`
 - **Version**: `1.1`
-- **Source / Website**: `https://masterh.me` (`https://github.com/HmFlashy/plasma6-widgets`)
-- **Package file**: `me.masterh.appgroup-1.1.plasmoid`
+- **Source / Website**: `https://github.com/HmFlashy/plasma6-widgets/tree/main/applets/me.masterh.appdrawer`
+- **Package file**: `me.masterh.appdrawer-1.1.plasmoid`
 
 ### Description
 ```markdown
