@@ -153,6 +153,16 @@ KCM.SimpleKCM {
                 to: 900
                 stepSize: 20
             }
+
+            QQC2.Button {
+                icon.name: "zoom-fit-best"
+                text: "Reset to auto size"
+                enabled: widthSpin.value > 0 || heightSpin.value > 0
+                onClicked: {
+                    widthSpin.value = 0
+                    heightSpin.value = 0
+                }
+            }
         }
 
         Kirigami.Heading {

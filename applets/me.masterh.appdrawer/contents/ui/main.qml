@@ -274,14 +274,27 @@ PlasmoidItem {
             : (root.apps.length === 4 ? 2
             : (root.apps.length <= 9 ? 3 : 4)))
         readonly property int visibleRows: Math.max(1, Math.min(4, Math.ceil(Math.max(1, root.apps.length) / effectiveCols)))
-        readonly property int autoWidth: Math.max(Kirigami.Units.gridUnit * 12, effectiveCols * cellWidth + Kirigami.Units.largeSpacing * 2)
-        readonly property int autoHeight: headerRow.implicitHeight + (root.apps.length === 0 ? Kirigami.Units.gridUnit * 6 : visibleRows * cellHeight) + Kirigami.Units.largeSpacing * 3 + Kirigami.Units.smallSpacing * 2
+        readonly property int autoWidth: Math.max(headerRow.implicitWidth + Kirigami.Units.largeSpacing * 2, (root.apps.length === 0 ? Kirigami.Units.gridUnit * 10 : effectiveCols * cellWidth) + Kirigami.Units.largeSpacing * 2)
+        readonly property int autoHeight: headerRow.implicitHeight + (root.apps.length === 0 ? Kirigami.Units.gridUnit * 5 : visibleRows * cellHeight) + Kirigami.Units.largeSpacing * 2 + Kirigami.Units.smallSpacing * 2 + 2
+
+        function resetPopupSize() {
+            Plasmoid.configuration.customPopupWidth = 0
+            Plasmoid.configuration.customPopupHeight = 0
+            if (Plasmoid.configuration.popupWidth !== undefined) Plasmoid.configuration.popupWidth = 0
+            if (Plasmoid.configuration.popupHeight !== undefined) Plasmoid.configuration.popupHeight = 0
+            if (fullRoot.Window.window) {
+                fullRoot.Window.window.width = fullRoot.autoWidth
+                fullRoot.Window.window.height = fullRoot.autoHeight
+            }
+            root.expanded = false
+            Qt.callLater(function() { root.expanded = true })
+        }
 
         implicitWidth: Plasmoid.configuration.customPopupWidth > 0 ? Plasmoid.configuration.customPopupWidth : autoWidth
         implicitHeight: Plasmoid.configuration.customPopupHeight > 0 ? Plasmoid.configuration.customPopupHeight : autoHeight
         Layout.preferredWidth: implicitWidth
         Layout.preferredHeight: implicitHeight
-        Layout.minimumWidth: Kirigami.Units.gridUnit * 10
+        Layout.minimumWidth: Math.min(autoWidth, Kirigami.Units.gridUnit * 10)
         Layout.minimumHeight: Kirigami.Units.gridUnit * 7
 
         ColumnLayout {
@@ -298,6 +311,14 @@ PlasmoidItem {
                     level: 4
                     text: root.groupTitle
                     elide: Text.ElideRight
+                }
+
+                PlasmaComponents.ToolButton {
+                    icon.name: "zoom-fit-best"
+                    display: PlasmaComponents.AbstractButton.IconOnly
+                    PlasmaComponents.ToolTip.text: "Reset popup size to fit apps"
+                    PlasmaComponents.ToolTip.visible: hovered
+                    onClicked: fullRoot.resetPopupSize()
                 }
 
                 PlasmaComponents.ToolButton {
